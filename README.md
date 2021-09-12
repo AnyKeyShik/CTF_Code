@@ -11,6 +11,7 @@
 #### Forensics:
 
 Task | Writeup
+--- | ---
 [Easy 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy1) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/easy1)
 [Easy 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/easy2)
 [Medium 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/medium1) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/medium1)
@@ -21,6 +22,7 @@ Task | Writeup
 #### Reverse:
 
 Task | Writeup
+--- | ---
 [Easy 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/easy1) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/easy1)
 [Easy 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/easy2) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/easy2)
 [Medium](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/medium) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/medium)
@@ -31,6 +33,7 @@ Task | Writeup
 #### Binary analysis:
 
 Task | Writeup
+--- | ---
 [Easy 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/easy1) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/easy1)
 [Easy 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/easy2) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/easy2)
 [Medium 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/medium1) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/medium1)
@@ -41,6 +44,7 @@ Task | Writeup
 #### Admin:
 
 Task | Writeup
+--- | ---
 [Easy 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/easy1) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/easy1)
 [Easy 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/easy2) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/easy2)
 [Medium 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/medium1) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/medium1)
@@ -51,6 +55,7 @@ Task | Writeup
 #### Crypto:
 
 Task | Writeup
+--- | ---
 [Easy 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/easy1) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/easy1)
 [Easy 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/easy2) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/easy2)
 [Medium 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/medium1) | [Solve](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/medium1)
