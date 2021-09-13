@@ -43,7 +43,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[idxtotoc,hyperref,openany,oneside]{labbook} % 'openany' here removes the gap page between days, erase it to restore this gap; 'oneside' can also be added to remove the shift that odd pages have to the right for easier reading
+\documentclass[idxtotoc,hyperref,openany,oneside]{files/crypto} % 'openany' here removes the gap page between days, erase it to restore this gap; 'oneside' can also be added to remove the shift that odd pages have to the right for easier reading
 
 \usepackage[ 
   backref=page,
@@ -126,7 +126,7 @@
 Достаточно простая задача. Нам дается файл с какими-то иероглифами:
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=0.5\linewidth]{chinese}
+\includegraphics[width=0.5\linewidth]{files/chinese}
 \end{center}
 \caption{Китайцы уже близко}
 \label{fig:chinese}
@@ -134,7 +134,7 @@
 Казалось бы, что тут можно придумать, переводчик выдает какую-то дичь. Если заметить название таска, то можно подумать про какую-то кодировку из base'ов. Немного гуглинга и можно наткнуться на весьма интересную штуку под названием \href{https://github.com/qntm/base65536}{base65536}. Прогнав через него натыкаемся на какую-то случайную последовательность эмодзи:
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=0.5\linewidth]{emoji}
+\includegraphics[width=0.5\linewidth]{files/emoji}
 \end{center}
 \caption{Кто-то слишком эмоционален}
 \label{fig:emoji}
@@ -142,7 +142,7 @@
 Погуглив еще немного можно найти \href{https://github.com/AdamNiederer/base100}{base100}, после извлечения из которого получаем старый-добрый base64:
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=0.5\linewidth]{base64}
+\includegraphics[width=0.5\linewidth]{files/base64}
 \end{center}
 \caption{То, что знакомо почти всем}
 \label{fig:base64}
