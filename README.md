@@ -6,6 +6,8 @@
 
 ### Authour of this tasks: AnyKeyShik Rarity [@AnyKeyShik](https://t.me/AnyKeyShik)
 
+#### Flag format: `oren_ctf_<flag>!`
+
 ## Tasks and writeups:
 
 #### Forensics:
