@@ -172,7 +172,21 @@ flag = flag.decode('utf-8')
 print(flag)
 \end{lstlisting}
 
-На выходе получаем флаг \verb|oren_ctf_KevinDavidMitnick!|
+На выходе получаем флаг \verb|oren_ctf_KevinDavidMitnick!|.
+
+%----------------------------------------------------------------------------------------
+
+\experiment{easy2}
+
+Судя по виду зашифрованного флага и названию задачи перед нами какой-то хэш.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=1.0\linewidth]{files/md5flag}
+\end{center}
+\caption{Слишком много хексов}
+\label{fig:chinese}
+\end{figure}
+Если посмотреть длинну, то мы увидим, что длинна флага ровно 32 символа, что позволяет подумать про MD5. Дальше можно либо брутить локально с помощью HashCat/JhonTheRipper или воспользоваться онлайн-сервисами наподобие \href{https://crackstation.net/}{CrackStation}. После чего получаем строку \verb|RobertMorris|, которую нужно обернуть в \verb|oren_ctf_| и \verb|!|. После чего получаем флаг \verb|oren_ctf_RobertMorris!|.
 
 %----------------------------------------------------------------------------------------
 
