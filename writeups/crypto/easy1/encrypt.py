@@ -5,23 +5,22 @@ import base65536
 import pybase100 as base100
 import base64
 
-with open('flag', 'r') as flag_file:
-    flag = flag_file.read()
-    print(flag, end='\n')
+
+def encode(flag):
     flag = flag.encode('utf-8')
+    flag = base64.b64encode(flag)
+    flag = base100.encode(flag)
+    flag = base65536.encode(flag)
 
-# Base64
-flag = base64.b64encode(flag)
-print(flag.decode('utf-8'), end='\n\n')
+    return flag
 
-# Base100
-flag = base100.encode(flag)
-print(flag.decode('utf-8'), end='\n\n')
 
-# Base65536
-flag = base65536.encode(flag)
-print(flag, end='\n\n')
+def main():
+    with open("flag", 'r') as flagfile, open("flag.enc", 'w') as enc_flagfile:
+        flag = flagfile.read()
+        enc_flag = encode(flag)
+        enc_flagfile.write(enc_flag)
 
-with open('flag.enc', 'w') as flag_file:
-    flag_file.write(flag)
-    print("Encrypted successful!")
+
+if __name__ == '__main__':
+    main()

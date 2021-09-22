@@ -74,7 +74,7 @@
 \newexperiment{medium1}{Please be careful with ASR}
 \newexperiment{medium2}{Please don't share}
 \newexperiment{hard1}{Do you want to play some gamel?}
-\newexperiment{hard2}{Swift task}
+\newexperiment{hard2}{Curve task}
 
 %---------------------------------------------------------------------------------------
 
@@ -123,6 +123,8 @@
 
 \experiment{easy1}
 
+\textbf{Теги:} baseN, googling\vspace{\baselineskip}
+
 Достаточно простая задача. Нам дается файл с какими-то иероглифами:
 \begin{figure}[H]
 \begin{center}
@@ -155,22 +157,31 @@
 Чтобы райтап был полным, рассмотрим второй вариант, потому что первый достаточно очевидный и не требует пояснений. Скрипт для расшифровки выглядит примерно следующим образом:
 \newpage
 \begin{lstlisting}[language=Python, caption=Дешифровка флага]
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import base65536
 import pybase100 as base100
 import base64
 
-with open('flag.enc', 'r') as flag_file:
-    flag = flag_file.read()
 
-flag = base65536.decode(flag)
-flag = base100.decode(flag)
-flag = base64.b64decode(flag)
-flag = flag.decode('utf-8')
+def decode(flag):
+    flag = base65536.decode(flag)
+    flag = base100.decode(flag)
+    flag = base64.b64decode(flag)
+    flag = flag.decode('utf-8')
 
-print(flag)
+    return flag
+
+def main():
+    with open("flag.enc", 'r') as flag_file:
+        flag = flag_file.read()
+
+    print(flag)
+
+
+if __name__ == '__main__':
+    main()
 \end{lstlisting}
 
 На выходе получаем флаг \verb|oren_ctf_KevinDavidMitnick!|.
@@ -178,6 +189,8 @@ print(flag)
 %-----------------------------------------
 
 \experiment{easy2}
+
+\textbf{Теги:} hash, hash crack\vspace{\baselineskip}
 
 Судя по виду зашифрованного флага и названию задачи перед нами какой-то хэш.
 \begin{figure}[H]
@@ -194,6 +207,8 @@ print(flag)
 \labday{Medium}
 
 \experiment{medium1}
+
+\textbf{Теги:} RSA, Hastad Attack\vspace{\baselineskip}
 
 Судя по ключам и названию задчи речь явно идет про RSA. Что же, можно погуглить про атаки на этот алгоритм и наткнуться на весьма интересную штуку под названием \href{https://en.wikipedia.org/wiki/Coppersmith\%27s_attack#H\%C3\%A5stad's_broadcast_attack}{Håstad's broadcast attack}. После чего, если попробовать сдампить открытую экспоненту и модуль из наших открытых ключей, то можно увидеть, что во всех трех ключах экспонента маленькая и равна 3. Что уже точно намекает на эту атаку. 
 
@@ -237,6 +252,7 @@ from functools import reduce
 from gmpy2 import root
 from Crypto.PublicKey import RSA
 
+
 def chinese_remainder_theorem(items):
     N = 1
     for a, n in items:
@@ -279,11 +295,13 @@ def mul_inv(a, b):
 
     return x1
 
+
 def get_cipher(filename):
     with open(filename, 'rb') as cipher:
         value = cipher.read().hex()
 
     return int(value, 16)
+
 
 def get_modulus(filename):
     with open(filename) as keyfile:
@@ -292,8 +310,8 @@ def get_modulus(filename):
 
     return key.n
 
-if __name__ == '__main__':
 
+def main():
     ciphertext1 = get_cipher("flag.enc.alice")
     ciphertext2 = get_cipher("flag.enc.bob")
     ciphertext3 = get_cipher("flag.enc.eve")
@@ -302,27 +320,39 @@ if __name__ == '__main__':
     modulus2 = get_modulus("bob.pub")
     modulus3 = get_modulus("eve.pub")
 
-    C = chinese_remainder_theorem([(ciphertext1, modulus1), (ciphertext2, modulus2), (ciphertext3, modulus3)])
+    C = chinese_remainder_theorem([(ciphertext1, modulus1), 
+    					(ciphertext2, modulus2),
+    					(ciphertext3, modulus3)])
     flag = int(root(C, 3))
     flag = hex(flag)[2:]
 
     print(unhexlify(flag).decode('utf-8'), end='')
+
+
+if __name__ == '__main__':
+    main()
 \end{lstlisting}
 
-После выполнения скрипта на выходе получаем расшифрованный текст с флагом: \verb|CIH, also known as Chernobyl or Spacefiller, is a Microsoft Windows 9x computer virus which first emerged in 1998. Its payload is overwriting critical information on infected system drives, and in some cases destroying the system BIOS. Flag: oren_ctf_CIH!|
-
+После выполнения скрипта на выходе получаем расшифрованный текст с флагом:
+\begin{verbatim}
+CIH, also known as Chernobyl or Spacefiller, is a Microsoft Windows 9x
+computer virus which first emerged in 1998. Its payload is overwriting
+critical information on infected system drives, and in some cases
+destroying the system BIOS. Flag: oren_ctf_CIH!
+\end{verbatim}
 
 %-----------------------------------------
 
-
 \experiment{medium2}
+
+\textbf{Теги:} Shamir's Secret Sharing, AES\vspace{\baselineskip}
 
 При подключении к серверу мы видим сообщение
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=1.0\linewidth]{files/shamir_aes}
 \end{center}
-\caption{Это "жжж" явно неспроста}
+\caption{Выглядит странно}
 \label{fig:chinese}
 \end{figure}
 Исходя из названия задачи и формулировки подсказки можно предположить, что речь идет о \href{https://en.wikipedia.org/wiki/Shamir\%27s_Secret_Sharing}{Shamir Secret Sharing Scheme} (или иногда можно встретить сокращение SSSS). Помимо этого есть опечатка в слове \verb|event|, что тоже дает какую-то подсказку. По подсказке понятно, что схемой разбит не сам флаг, а ключ для какого-то алгоримта шифрования с нулевым вектором инициализации, которым уже зашифрован флаг.
@@ -345,22 +375,30 @@ from Crypto.Cipher import AES
 from secretsharing import SecretSharer
 
 
-if len(sys.argv) < 4:
-    print("Usage: {} part1 part2 part2".format(sys.argv[0]))
-    exit(1)
+def main():
+    if len(sys.argv) < 4:
+        print("Usage: {} part1 part2 part2".format(sys.argv[0]))
+        exit(1)
 
-AES_KEY = SecretSharer.recover_secret([sys.argv[1], sys.argv[2], sys.argv[3]])
-IV = b'\x00' * 16
-cipher = AES.new(key=AES_KEY, mode=AES.MODE_CBC, iv=IV)
+    AES_KEY = SecretSharer.recover_secret([sys.argv[1], sys.argv[2], sys.argv[3]])
+    IV = b'\x00' * 16
+    cipher = AES.new(key=AES_KEY, mode=AES.MODE_CBC, iv=IV)
 
-with open('flag.enc', 'r') as flagfile:
-    enc_flag = b64decode(flagfile.read())
+    with open("flag.enc", 'r') as flagfile:
+        enc_flag = b64decode(flagfile.read())
 
-flag = cipher.decrypt(enc_flag)
+    flag = cipher.decrypt(enc_flag)
 
-print("Decrypted flag is: {}".format(flag))
+    print("Decrypted flag is: {}".format(flag))
+
+
+if __name__ == '__main__':
+    main()
 \end{lstlisting}
 
+После выполнения скрипта на выходе получаем расшифрованный флаг: 
+
+\verb|Decrypted flag is: oren_ctf_ILOVEYOU_or_LoveLetter!|
 
 %----------------------------------------------------------------------------------------
 
@@ -368,10 +406,17 @@ print("Decrypted flag is: {}".format(flag))
 
 \experiment{hard1}
 
+\textbf{Теги:} Elgamal\vspace{\baselineskip}
+
+
+
 %-----------------------------------------
 
-
 \experiment{hard2}
+
+\textbf{Теги:} Diffie-Hellman, Elliptic-curve, several ways of solve\vspace{\baselineskip}
+
+
 
 %----------------------------------------------------------------------------------------
 

@@ -5,47 +5,36 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.backends import default_backend
 
-#################### FIRST KEY ####################
-key = rsa.generate_private_key(backend=default_backend(), public_exponent=3, key_size=2048)
 
-key_pub = key.public_key().public_bytes(serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo)
-key_priv = key.private_bytes(encoding=serialization.Encoding.PEM,
-                        format=serialization.PrivateFormat.TraditionalOpenSSL,
-                        encryption_algorithm=serialization.NoEncryption())
+def gen_key():
+    key = rsa.generate_private_key(backend=default_backend(), public_exponent=3, key_size=2048)
 
-with open('bob', 'wb') as bob:
-    bob.write(key_priv)
+    key_pub = key.public_key().public_bytes(serialization.Encoding.PEM,
+                                            serialization.PublicFormat.SubjectPublicKeyInfo)
+    key_priv = key.private_bytes(encoding=serialization.Encoding.PEM,
+                                 format=serialization.PrivateFormat.TraditionalOpenSSL,
+                                 encryption_algorithm=serialization.NoEncryption())
 
-with open('bob.pub', 'wb') as bobpub:
-    bobpub.write(key_pub)
+    return key_pub, key_priv
 
 
-################### SECOND KEY #######################
-key = rsa.generate_private_key(backend=default_backend(), public_exponent=3, key_size=2048)
+def main():
+    alice_pub, alice_priv = gen_key()
+    bob_pub, bob_priv = gen_key()
+    eve_pub, eve_priv = gen_key()
 
-key_pub = key.public_key().public_bytes(serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo)
-key_priv = key.private_bytes(encoding=serialization.Encoding.PEM,
-                        format=serialization.PrivateFormat.TraditionalOpenSSL,
-                        encryption_algorithm=serialization.NoEncryption())
+    with open("alice", 'wb') as alice, open("alice.pub", 'wb') as alicepub:
+        alice.write(alice_priv)
+        alicepub.write(alice_pub)
 
-with open('alice', 'wb') as alice:
-    alice.write(key_priv)
+    with open("bob", 'wb') as bob, open("bob.pub", 'wb') as bobpub:
+        bob.write(bob_priv)
+        bobpub.write(bob_pub)
 
-with open('alice.pub', 'wb') as alicepub:
-    alicepub.write(key_pub)
+    with open("eve", 'wb') as eve, open("eve.pub", 'wb') as evepub:
+        eve.write(eve_priv)
+        evepub.write(eve_pub)
 
 
-#################### THIRD KEY ###########################
-key = rsa.generate_private_key(backend=default_backend(), public_exponent=3, key_size=2048)
-
-key_pub = key.public_key().public_bytes(serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo)
-key_priv = key.private_bytes(encoding=serialization.Encoding.PEM,
-                        format=serialization.PrivateFormat.TraditionalOpenSSL,
-                        encryption_algorithm=serialization.NoEncryption())
-
-with open('eve', 'wb') as eve:
-    eve.write(key_priv)
-
-with open('eve.pub', 'wb') as evepub:
-    evepub.write(key_pub)
-
+if __main__ == '__main__':
+    main()

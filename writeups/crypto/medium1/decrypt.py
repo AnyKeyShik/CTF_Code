@@ -9,6 +9,7 @@ from functools import reduce
 from gmpy2 import root
 from Crypto.PublicKey import RSA
 
+
 def chinese_remainder_theorem(items):
     N = 1
     for a, n in items:
@@ -51,11 +52,13 @@ def mul_inv(a, b):
 
     return x1
 
+
 def get_cipher(filename):
     with open(filename, 'rb') as cipher:
         value = cipher.read().hex()
 
     return int(value, 16)
+
 
 def get_modulus(filename):
     with open(filename) as keyfile:
@@ -64,8 +67,8 @@ def get_modulus(filename):
 
     return key.n
 
-if __name__ == '__main__':
 
+def main():
     ciphertext1 = get_cipher("flag.enc.alice")
     ciphertext2 = get_cipher("flag.enc.bob")
     ciphertext3 = get_cipher("flag.enc.eve")
@@ -79,3 +82,7 @@ if __name__ == '__main__':
     flag = hex(flag)[2:]
 
     print(unhexlify(flag).decode('utf-8'), end='')
+
+
+if __name__ == '__main__':
+    main()
