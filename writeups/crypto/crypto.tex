@@ -156,6 +156,7 @@
 \newpage
 \begin{lstlisting}[language=Python, caption=Дешифровка флага]
 #! /usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import base65536
 import pybase100 as base100
@@ -226,6 +227,7 @@ $C' = M^3$
 После всего вышесказанного не составляет труда написать простенький скрипт на питоне, который выдает зашифрованное сообщение:
 \begin{lstlisting}[language=Python, caption=Атака Хастада]
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import gmpy2
 gmpy2.get_context().precision = 2048
@@ -307,11 +309,58 @@ if __name__ == '__main__':
     print(unhexlify(flag).decode('utf-8'), end='')
 \end{lstlisting}
 
+После выполнения скрипта на выходе получаем расшифрованный текст с флагом: \verb|CIH, also known as Chernobyl or Spacefiller, is a Microsoft Windows 9x computer virus which first emerged in 1998. Its payload is overwriting critical information on infected system drives, and in some cases destroying the system BIOS. Flag: oren_ctf_CIH!|
+
 
 %-----------------------------------------
 
 
 \experiment{medium2}
+
+При подключении к серверу мы видим сообщение
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=1.0\linewidth]{files/shamir_aes}
+\end{center}
+\caption{Это "жжж" явно неспроста}
+\label{fig:chinese}
+\end{figure}
+Исходя из названия задачи и формулировки подсказки можно предположить, что речь идет о \href{https://en.wikipedia.org/wiki/Shamir\%27s_Secret_Sharing}{Shamir Secret Sharing Scheme} (или иногда можно встретить сокращение SSSS). Помимо этого есть опечатка в слове \verb|event|, что тоже дает какую-то подсказку. По подсказке понятно, что схемой разбит не сам флаг, а ключ для какого-то алгоримта шифрования с нулевым вектором инициализации, которым уже зашифрован флаг.
+
+\textbf{Немного о схеме Шамира}
+
+Если очень кратко, то секрет (информация, которой мы хотим поделиться) $S$ разбивается на $n$ частей таким образом, чтобы можно было восстановить исходное сообщение $S$ только в случае, если мы имеем не менее $k$ кусочков из $n$. Даже наличие $k-1$ куска недостаточно, чтобы восстановить исходную $S$. Чуть более подробно про это написано вот \href{https://habr.com/ru/post/431392/}{здесь}.
+
+\textbf{Реализация}
+
+Можно писать разделение секрета самому, но это выходит за рамки данного райтапа. Если немного погуглить, то можно найти достаточно большое количество реализаций этого алгоритма на самых разных языках. Для питона существует вот \href{https://github.com/shea256/secret-sharing}{эта} реализация, но, к сожалению, она имеет проблемы с третьей версией из-за использования типа \verb|long|, который был удален. Но ничего не мешает написать скрипт на втором. Итак, после получения полного секрета можно заметить, что это строка длинной 16 символов, что, в купе с нулевым инициализирующим вектором, дает возможность предположить, что используется AES-128. Остается лишь понять, какой из двух самых известных вариантов используется - ECB или CBC. Это можно сделать просто попробовав каждый из них. После чего можно написать небольшой питоновский скрипт, чтобы получить флаг:
+\newpage
+\begin{lstlisting}[language=Python, caption=Расшифровка флага AES-CBC]
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+
+import sys
+from base64 import b64decode
+from Crypto.Cipher import AES
+from secretsharing import SecretSharer
+
+
+if len(sys.argv) < 4:
+    print("Usage: {} part1 part2 part2".format(sys.argv[0]))
+    exit(1)
+
+AES_KEY = SecretSharer.recover_secret([sys.argv[1], sys.argv[2], sys.argv[3]])
+IV = b'\x00' * 16
+cipher = AES.new(key=AES_KEY, mode=AES.MODE_CBC, iv=IV)
+
+with open('flag.enc', 'r') as flagfile:
+    enc_flag = b64decode(flagfile.read())
+
+flag = cipher.decrypt(enc_flag)
+
+print("Decrypted flag is: {}".format(flag))
+\end{lstlisting}
+
 
 %----------------------------------------------------------------------------------------
 
