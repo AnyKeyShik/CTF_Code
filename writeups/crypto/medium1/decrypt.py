@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import gmpy2
 gmpy2.get_context().precision = 2048
