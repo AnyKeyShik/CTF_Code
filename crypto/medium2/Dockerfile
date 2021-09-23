@@ -1,11 +1,15 @@
-FROM python:2.7
+FROM python:2.7-alpine
 
-RUN python -m pip install secretsharing
-
+RUN mkdir -p /app
 WORKDIR /app
-ADD server.py server.py
-ADD flag.enc flag.enc
-ADD key key
-EXPOSE 1488
 
-CMD ["python2", "./server.py"]
+RUN apk add socat
+RUN python2 -m pip install secretsharing
+
+COPY . /app
+
+USER nobody
+
+ENV PYTHONUNBUFFERED=1
+
+CMD ["socat", "TCP4-LISTEN:7777,reuseaddr,fork", "EXEC:timeout 60 ./server.py"]
