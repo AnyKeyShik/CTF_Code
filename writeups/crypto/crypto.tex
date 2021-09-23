@@ -57,6 +57,8 @@
 \usepackage{float} % Required for specifying the exact location of a figure or table
 \usepackage{graphicx} % Required for including images2
 \usepackage{listings} % Used for programs' listings
+\usepackage{tcolorbox} % For textboxes
+\usepackage{amsmath} % For equation
 
 \usepackage[english,russian]{babel}
 \usepackage[utf8]{inputenc}
@@ -125,6 +127,10 @@
 
 \textbf{Теги:} baseN, googling\vspace{\baselineskip}
 
+\begin{tcolorbox}
+<условие задачи>
+\end{tcolorbox}
+
 Достаточно простая задача. Нам дается файл с какими-то иероглифами:
 \begin{figure}[H]
 \begin{center}
@@ -155,7 +161,6 @@
 \item Написать питоновский скрипт
 \end{itemize}
 Чтобы райтап был полным, рассмотрим второй вариант, потому что первый достаточно очевидный и не требует пояснений. Скрипт для расшифровки выглядит примерно следующим образом:
-\newpage
 \begin{lstlisting}[language=Python, caption=Дешифровка флага]
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
@@ -192,6 +197,10 @@ if __name__ == '__main__':
 
 \textbf{Теги:} hash, hash crack\vspace{\baselineskip}
 
+\begin{tcolorbox}
+<условие задачи>
+\end{tcolorbox}
+
 Судя по виду зашифрованного флага и названию задачи перед нами какой-то хэш.
 \begin{figure}[H]
 \begin{center}
@@ -209,6 +218,10 @@ if __name__ == '__main__':
 \experiment{medium1}
 
 \textbf{Теги:} RSA, Hastad Attack\vspace{\baselineskip}
+
+\begin{tcolorbox}
+<условие задачи>
+\end{tcolorbox}
 
 Судя по ключам и названию задчи речь явно идет про RSA. Что же, можно погуглить про атаки на этот алгоритм и наткнуться на весьма интересную штуку под названием \href{https://en.wikipedia.org/wiki/Coppersmith\%27s_attack#H\%C3\%A5stad's_broadcast_attack}{Håstad's broadcast attack}. После чего, если попробовать сдампить открытую экспоненту и модуль из наших открытых ключей, то можно увидеть, что во всех трех ключах экспонента маленькая и равна 3. Что уже точно намекает на эту атаку. 
 
@@ -237,8 +250,8 @@ $C' = M^3$
 \end{center}
 Так мы и найдем наше искомое сообщение $M$.
 
-\newpage
 \textbf{Программная реализация атаки Хастада}
+
 После всего вышесказанного не составляет труда написать простенький скрипт на питоне, который выдает зашифрованное сообщение:
 \begin{lstlisting}[language=Python, caption=Атака Хастада]
 #!/usr/bin/env python3
@@ -347,6 +360,10 @@ destroying the system BIOS. Flag: oren_ctf_CIH!
 
 \textbf{Теги:} Shamir's Secret Sharing, AES\vspace{\baselineskip}
 
+\begin{tcolorbox}
+<условие задачи>
+\end{tcolorbox}
+
 При подключении к серверу мы видим сообщение
 \begin{figure}[H]
 \begin{center}
@@ -364,7 +381,6 @@ destroying the system BIOS. Flag: oren_ctf_CIH!
 \textbf{Реализация}
 
 Можно писать разделение секрета самому, но это выходит за рамки данного райтапа. Если немного погуглить, то можно найти достаточно большое количество реализаций этого алгоритма на самых разных языках. Для питона существует вот \href{https://github.com/shea256/secret-sharing}{эта} реализация, но, к сожалению, она имеет проблемы с третьей версией из-за использования типа \verb|long|, который был удален. Но ничего не мешает написать скрипт на втором. Итак, после получения полного секрета можно заметить, что это строка длинной 16 символов, что, в купе с нулевым инициализирующим вектором, дает возможность предположить, что используется AES-128. Остается лишь понять, какой из двух самых известных вариантов используется - ECB или CBC. Это можно сделать просто попробовав каждый из них. После чего можно написать небольшой питоновский скрипт, чтобы получить флаг:
-\newpage
 \begin{lstlisting}[language=Python, caption=Расшифровка флага AES-CBC]
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
@@ -408,13 +424,151 @@ if __name__ == '__main__':
 
 \textbf{Теги:} Elgamal\vspace{\baselineskip}
 
+\begin{tcolorbox}
+<условие задачи>
+\end{tcolorbox}
 
+При подключении к серверу мы видим сообщение
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=1.0\linewidth]{files/elgamal}
+\end{center}
+\caption{Опять какая-то асимметрия}
+\label{fig:chinese}
+\end{figure}
+Судя по тому, что шифротекст разделен на два числа - перед нами криптосистема Эль-Гамаля.
+
+\textbf{Криптосистема Эль-Гамаля}
+
+Идея данной системы основана на сложности нахождения целого неотрицательного числа $x$, удовлетворяющего уравнению $g^x = a$ в циклической группе\footnote{Тут нужно некоторое уточнение. Циклическая группа $(G, *)$, если не вдаваться в дебри высшей математики - множество для элементов которого мы определили по каким правилам можно их складывать (строго говоря, то сложение которое проходят в школе и это - немного разные вещи. В данном случае под сложением подразумевается операция, которая однозначно ставит в соответствие двум элементам $e_1$ и $e_2$ группы $G$ некоторый элемент $e_3$, также принадлежащий группе $G$). Эта группа особенна тем, что результат операции может быть меньше операндов. По поводу цикличности все совсем просто - группа образуется некоторым элементом $g$, который называется образующим, а все остальные ее элементы это степени образующего. То есть $G = {g^1, g^2, ...}$. Группа становится циклической, если в $g^n = g$. Тогда число $n$ называется порядком группы.}. 
+
+\textit{Генерация ключа}
+
+Алгоритм генеарции ключа работает по следующему принципу:
+\begin{itemize}
+	\item Выбираем случайное большое целое число $q$ и строим циклическую группу $G_q$ с образующим элементом $g$.
+	\item Выбираем случайный целочисленный положительный $x$, т. ч. $1 \leq x \geq q - 1$ и $НОД(x, q) = 1$
+	\item Считаем $h = g^x$
+	\item Публичный ключ состоит из трех частей: $(q, g, h)$
+\end{itemize}
+
+\textit{Шифрование}
+
+Пусть мы хотим передать некоторое сообщение M. Тогда:
+\begin{itemize}
+	\item Выбирается случайный целочисленный положительный $y$, $1 \leq y \geq q - 1$ и $НОД(y, q) = 1$
+	\item Вычисляется секрет $s = h^y = (g^x)^y = g^{xy}$
+	\item Вычисляется $c_1 = g^y$
+	\item Вычисляется $c_2 = M * s$
+\end{itemize}
+Шифротекстом будет пара $(c_1, c_2)$
+
+\textit{Дешифровка}
+
+Мы хотим расшифровать сообщение $(c_1, c_2)$ и у нас есть приватный ключ $x$. Если провести некоторые математические выкладки:
+\begin{center}
+\begin{equation*}
+ \begin{cases}
+   c_1 = g^y 
+   \\
+   c_2 = M * s
+ \end{cases}
+\end{equation*}
+$\Rightarrow$
+\begin{equation*}
+ \begin{cases}
+   c_1 = g^y 
+   \\
+   c_2 = M * h^y
+ \end{cases}
+\end{equation*}
+$\Rightarrow$
+\begin{equation*}
+ \begin{cases}
+   c_1 = g^y 
+   \\
+   c_2 = M * g^{xy}
+ \end{cases}
+\end{equation*}
+\end{center}
+То есть для получения оригинального сообщения M необходимо произвести следующие операции:
+\begin{center}
+$M = \frac{c_2}{c_1^y} = \frac{M * g^{xy}}{g^{xy}}$.
+\end{center}
+
+\textbf{Атака}
+
+Очевидно, что тот же самый шифротекст система отказывается расшифровывать. Но можно немного схитрить - умножить и поделить дробь на два. От этого, как известно, результат не поменяется:
+\begin{center}
+$c_2' = c_2 * 2$
+
+$M * 2 = \frac{c_2'}{c_1^y} = \frac{c_2 * 2}{c_1^y} = \frac{M * g^{xy} * 2}{g^{xy}}$.
+\end{center}
+После чего останется только поделить сообщение на два и получить флаг!
+
+\textbf{Реализация}
+
+После всего вышеперечисленного написать простенький скрипт на питоне не составляет труда. Для упрощения самому себе жизни я буду использовать библиотеку \verb|pwntools| (вообще говоря, она задумывалась для работы с бинарщиной, но также через нее весьма удобно работать с сокетами):
+\begin{lstlisting}[language=Python, caption=Взлом криптосистемы Эль-Гамаля]
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from pwn import *
+import re
+
+
+def get_cipher(msg):
+    str_tp = re.search(r'\d*, \d*', msg).group(0)
+
+    return tuple(map(int, str_tp.split(', ')))
+
+
+def mul_tuple(tuple):
+    new_tuple = (tuple[0], tuple[1] * 2)
+
+    return  ', '.join(map(str, new_tuple))
+
+
+def get_decrypt_flag(enc_flag):
+    hexflag2 = ''.join('{:02x}'.format(ord(ch)) for ch in enc_flag)
+    numflag2 = int(hexflag2, 16)
+    numflag = numflag2 // 2
+    hexflag = hex(numflag)[2:]
+
+    return ''.join([chr(int(''.join(ch), 16)) \ 
+    		for ch in zip(hexflag[0::2], hexflag[1::2])])
+
+
+def main():
+    r = remote('localhost', 1488)
+
+    msg = r.recvuntil('>>> ').decode('utf-8')
+    tuple = get_cipher(msg)
+
+    msg_for_flag = mul_tuple(tuple)
+    r.sendline(msg_for_flag)
+
+    enc_flag = r.recvline().decode('utf-8')
+    flag = get_decrypt_flag(enc_flag)
+
+    print("Decrypted flag: {}".format(flag))
+
+    r.close()
+
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
 
 %-----------------------------------------
 
 \experiment{hard2}
 
 \textbf{Теги:} Diffie-Hellman, Elliptic-curve, several ways of solve\vspace{\baselineskip}
+
+\begin{tcolorbox}
+<условие задачи>
+\end{tcolorbox}
 
 
 
