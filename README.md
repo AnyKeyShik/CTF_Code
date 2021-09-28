@@ -4,9 +4,19 @@
 <img src ="https://img.shields.io/github/license/AnyKeyShik/CTF_Code.svg" />
 </a>
 
-### Authour of this tasks: AnyKeyShik Rarity [@AnyKeyShik](https://t.me/AnyKeyShik)
+### Authour of this tasks: 
+AnyKeyShik Rarity [@AnyKeyShik](https://t.me/AnyKeyShik)
 
 #### Flag format: `oren_ctf_<flag>!`
+
+#### About files structure in this repo:
+* Every category placed in its own dir
+* Every task placed in dir named after him
+* In task dir:
+    * Files what must be served to players are placed in dir named `static`
+    * Files for placement on the org's server placed in dir named `service`
+* Scripts and other writeups are also categorized in their respective dirs
+* Writeups present as PDF files in the root of respective dir in dir `writeups`
 
 ## Tasks and writeups:
 
