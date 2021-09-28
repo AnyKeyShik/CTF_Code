@@ -290,3 +290,8 @@ TSWLatexianTemp*
 
 # Python
 *.pyc
+
+# Build
+build/
+.idea/
+.gradle/
