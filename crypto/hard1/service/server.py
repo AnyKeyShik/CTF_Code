@@ -55,8 +55,13 @@ def decrypt(c1, c2, priv, modulo):
 
 
 def read_flag():
-    with open("flag", 'r') as flagfile:
-        flag = flagfile.read()
+    try:
+        with open("flag", 'r') as flagfile:
+            flag = flagfile.read()
+    except IOError:
+        print('Some files is missing, tell admin')
+        exit(-1)
+
 
     hexflag = "".join("{:02x}".format(ord(ch)) for ch in flag)
     numflag = int(hexflag, 16)
@@ -92,7 +97,7 @@ def main():
         user_input = input()
 
         try:
-            enc_msg = tuple(map(int, user_input.split(', ')))
+            enc_msg = tuple(map(int, user_input.replace(' ', '').split(',')))
 
             if len(enc_msg) != 2:
                 raise ValueException

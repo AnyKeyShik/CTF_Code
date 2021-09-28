@@ -16,12 +16,20 @@ def main():
     CHALL_TEXT = "Here's a base64-encoded and encrypted flag: {flag}\nYou need a secret and literally zero ivent to get it!\n\nIt's your three part:"
 
     # Get encrypted flag
-    with open('flag.enc', 'r') as flagfile:
-        CHALL_TEXT = CHALL_TEXT.format(flag=flagfile.read())
+    try:
+        with open('flag.enc', 'r') as flagfile:
+            CHALL_TEXT = CHALL_TEXT.format(flag=flagfile.read())
+    except IOError:
+        print('Some files is missing, tell admin')
+        exit(-1)
 
     # Get AES key
-    with open('key', 'r') as key:
-        AES_KEY = key.read()
+    try:
+        with open('key', 'r') as key:
+            AES_KEY = key.read()
+    except IOError:
+        print('Some files is missing, tell admin')
+        exit(-1)
 
     shares = SecretSharer.split_secret(AES_KEY, SEND_SHARDS, SHARDS)
 
