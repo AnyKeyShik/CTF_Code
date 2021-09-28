@@ -15,7 +15,7 @@ AnyKeyShik Rarity [@AnyKeyShik](https://t.me/AnyKeyShik)
 * In task dir:
     * Files what must be served to players are placed in dir named `static`
     * Files for placement on the org's server placed in dir named `service`
-* Scripts and other writeups are also categorized in their respective dirs
+* Scripts and other writeups stuff are also categorized by their respective dirs
 * Writeups present as PDF files in the root of respective dir in dir `writeups`
 
 ## Tasks and writeups:
