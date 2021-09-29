@@ -12,24 +12,8 @@ repositories {
   mavenCentral()
 }
 
-dependencies {
-  testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
-
-  implementation 'com.google.guava:guava:30.1.1-jre'
-}
-
 application {
   mainClassName = 'licensechecker.Main'
-}
-
-test {
-  useJUnitPlatform()
-
-  dependsOn 'cleanTest'
-
-  testLogging {
-    events "passed", "skipped", "failed"
-  }
 }
 
 tasks.named('jar') {
@@ -44,12 +28,6 @@ sourceSets {
   main {
     java {
       srcDirs = ['src/main/java']
-    }
-  }
-
-  test {
-    java {
-      srcDirs = ['src/test/java']
     }
   }
 }

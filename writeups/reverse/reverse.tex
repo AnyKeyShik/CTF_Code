@@ -43,7 +43,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[idxtotoc,hyperref,openany]{files/reverse} % 'openany' here removes the gap page between days, erase it to restore this gap; 'oneside' can also be added to remove the shift that odd pages have to the right for easier reading
+\documentclass[idxtotoc,hyperref,openany,oneside]{files/reverse} % 'openany' here removes the gap page between days, erase it to restore this gap; 'oneside' can also be added to remove the shift that odd pages have to the right for easier reading
 
 \usepackage[ 
   backref=page,
@@ -128,6 +128,52 @@
 \begin{tcolorbox}
 <условие задачи>
 \end{tcolorbox}
+
+Нам дается программа на Java, которая хочет какую-то лицензию. Самое время ее разреверсить и посмотреть, что же там за лицензия нам нужна. Так как это Java, то можно восстановить исходный код с точностью до имен переменных с помощью любого декомпилятора. В райтапе будет использоваться JD-GUI. После открытия файла видим, что он совсем небольшой и состоит всего из трех классов:
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.7\linewidth]{files/java-classes}
+\end{center}
+\caption{Java изнутри}
+\label{fig:java-classes}
+\end{figure}
+
+После рассмотрения \verb|Main|'a понимаем, что это просто драйвер и ничего связанного с лицензией или ее обработкой не делает. С классом \verb|LicenseHandler| ситуация интереснее, но тоже ничего нужного нам - ни расшифровки, ни каких-либо проверок. Просто чтение из класса и обращение к классу \verb|Cryptor|, который, судя по всему, нам и нужен. Декомпилируем и смотрим:
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.7\linewidth]{files/java-cryptor}
+\end{center}
+\caption{Когда создал свою крипту}
+\label{fig:java-classes}
+\end{figure}
+
+С первого взгляда флаг лежит прямо перед нами. Но это как-то слишком просто даже для easy-задачи. Посмотрим чуть ниже. Дейсвительно, сначала происходит какая-то проверка хэша. Если посмотреть внимательнее - никаких хешей нет. Сначала проверяем, что длина лицензии 17 символов, потом просто массив байтиков, с 9 по 15 элементы, сверяется с константой \verb|HASH_PATTERN|. После чего в функции \verb|decrypt| собирается флаг - обертка остается без изменений, а вот 7 символов ксорятся с \verb|HASH_PATTERN|. После чего совсем не сложно написать простенький скрипт для ксора или (что еще проще) написать скрипт, который "сгенерирует" лицензию и скормить ее программе:
+\begin{lstlisting}[language=Python, caption=Генератор лицензии]
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+def main():
+    xored = ['\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00',
+    '\x00', '\x00', '\x09', '\x15', '\x17', '\x0c', '\x10', '\x13', 
+    '\x1c', '\x00']
+
+    with open('license.bin', 'wb') as licensefile:
+        for xb in xored:
+            licensefile.write(bytes(xb, 'utf-8'))
+
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+И получаем флаг:
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.7\linewidth]{files/java-flag}
+\end{center}
+\caption{Привет от Intel'a}
+\label{fig:java-flag}
+\end{figure}
 
 %-----------------------------------------
 
