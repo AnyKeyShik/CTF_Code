@@ -72,9 +72,9 @@
 
 \newexperiment{easy1}{Check the license!}
 \newexperiment{easy2}{Guess the password}
-\newexperiment{medium}{<Название>}
-\newexperiment{hard}{<Название>}
-\newexperiment{reallife}{<Название>}
+\newexperiment{medium}{Cryptowallet}
+\newexperiment{hard}{Friendly VM}
+\newexperiment{reallife}{Let's GO for cookies}
 
 %---------------------------------------------------------------------------------------
 
@@ -316,10 +316,12 @@ class Wallet:
 			template_id = random.randint(0, 1)
 
 			if template_id == 0:
-				self.last_operations.append(templates[template_id] 
+				self.last_operations.append(
+				templates[template_id] 
 				% (random.randint(100, 512), idg()))
 			else:
-				self.last_operations.append(templates[template_id] 
+				self.last_operations.append(
+				templates[template_id] 
 				% (idg(), random.randint(100, 512)))
 
 	def pack_operations(self):
@@ -327,7 +329,8 @@ class Wallet:
 			operation = list(self.last_operations[i])
 
 			for j in range(len(operation)):
-				operation[j] = chr(ord(operation[j]) ^ len(operation))
+				operation[j] = 
+				chr(ord(operation[j]) ^ len(operation))
 
 			self.last_operations[i] = ''.join(operation)
 
@@ -335,7 +338,8 @@ class Wallet:
 		self.info = list(self.info)
 
 		for i in range( len(self.info )):
-			self.info[i] = chr(ord(self.info[i]) ^ ord(key[i % len(key)]))
+			self.info[i] = 
+			chr(ord(self.info[i]) ^ ord(key[i % len(key)]))
 
 		self.info = ''.join(self.info)
 
@@ -670,11 +674,67 @@ exit
 
 \experiment{reallife}
 
-\textbf{Теги:} <Теги>\vspace{\baselineskip}
+\textbf{Теги:} Go, ELf 64 bit, Web, No strip\vspace{\baselineskip}
 
 \begin{tcolorbox}
 <условие задачи>
 \end{tcolorbox}
+
+Даже не стрипанный Golang-бинарь исследовать довольно сложно, но есть пара трюков, которые упростят анализ (в данном случае):
+\begin{itemize}
+\item Т.к. это CTF-таск тут есть довольно простая и понятная идея - получить флаг, не забываем об этом.
+\item Судя по тому, что там дают адрес сайта, флаг находится на сайте, значит нужно получить доступ к сайту. А бинарь является как раз таки веб-приложением.
+\item Сразу в поиске функций вводим \verb|main_| и получаем все функции для данного модуля (то есть модуля который писал пользователь). Таким образом мы очень сильно сужаем область исследования.
+\end{itemize}
+
+После этого сразу можно найти функцию \verb|main_check_cookie|. Кажется, что-то интересное. Более того, если посмотреть функцию логина, то становится понятно, что в них нет ничего интересно. По сути залогиниться нельзя, авторизация только через куки. Перед вызовом функции проверки куки, можно отследить, что значение берётся из переменной \verb|asm_dev_test|, теперь мы знаем имя куки-переменной. Функция проверки в целом не сложная, но анализировать её тяжеловато. Из поверхностного анализа можно вынести, что как минимум 2 раза внутри 2ух разных циклов вызывается расчёт контрольной суммы.Определить алгоритм контрольной суммы можно по константам и на данном этапе стоит начинать отладку, потому что в статике такой бинарь анализировать очень больно. С помощью отладчика можно определить, что размер значения куки должны быть 20 байт (есть проверка в начале функции). Далее идёт самый сложный момент, необходимо с помощью отладки и анализа кода понять, что куки разбивается на 10 частей по 2 байта и от каждой части вычисляется 2-байтная контрольная сумма и помещается в массив. После этого идёт очень похожий код, потому что тоже самое происходит с первыми 10-ю символами куки и в итоге мы имеем два массива с контрольными сумами одинакового размера. После чего эти массивы XOR'ятся и сравниваются с эталонными заложенными в память бинарника.
+XOR и сравнение происходит в конце функции, а эталонные значения лежат по адресу (0x00000000084E1E0 взято из IDA 7.0). Собрав всё воедино, можно понять, что алгоритм вроде как выглядит стойким, но это не так. Реализуем небольшой брут скрипт для подбора куки:
+\begin{lstlisting}[language=Python, caption=Брут куки]
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+
+from crccheck.crc import Crc16
+
+if __name__ == "__main__":
+	# init crc as X25
+    crc_obj = Crc16
+    crc_obj._initvalue = 0xffff
+    crc_obj._reflect_input = True
+    crc_obj._reflect_output = True
+    crc_obj._xor_output = 0xffff
+    crc_obj._check_result = 0x906E
+
+	# this is values after xor
+    valids = [49170, 5086, 13122, 9750, 15377, 20382, 
+    	25550, 29006, 31141, 40445]
+
+    cookie = ''
+    valids_idx = 0
+
+    while 1:
+        for i in range(20, 127):
+            for i1 in range(20, 127):
+                test = cookie + chr(i) + chr(i1)
+
+                if len(cookie) > 0:
+                    valid_parts = len(cookie) / 2
+                    xor_key = crc_obj.calc(bytearray(cookie[valid_parts]))
+                else:
+                    xor_key = crc_obj.calc(bytearray(chr(i)))
+
+                part_crc = crc_obj.calc(bytearray(test))
+
+                if valids_idx < len(valids) and 
+                	(xor_key ^ part_crc) == valids[valids_idx]:
+                    cookie += chr(i) + chr(i1)
+                    valids_idx += 1
+                    print "cur_cookie =", cookie
+                elif valids_idx == len(valids):
+                    print "\nCorrect cookie: ", cookie
+                    exit(0)
+\end{lstlisting}
+
+Логинимся с кукой на сайт и получаем флаг \verb|oren_ctf_Morris_worm!|
 
 %----------------------------------------------------------------------------------------
 
