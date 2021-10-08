@@ -8,7 +8,8 @@ RUN useradd -d /home/ctf/ -m -p ctf -s /bin/bash ctf
 RUN echo "ctf:ctf" | chpasswd
 
 WORKDIR /home/ctf
-COPY . /home/ctf
+ADD system_health_check flag /home/ctf/
+ADD ynetd /home/ctf/
 
 RUN chown -R root:root /home/ctf
 
