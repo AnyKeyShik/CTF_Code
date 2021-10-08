@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-from pwngun_craft import craft
 from pwn import *
 
 REMOTE = True
