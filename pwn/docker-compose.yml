@@ -61,15 +61,34 @@ services:
     stop_grace_period: 3s
     privileged: true
 
-    cpus: 1.0
+    cpus: 0.1
     mem_limit: 1G
     memswap_limit: 1G
-    pids_limit: 2048
+    pids_limit: 512
 
     ports:
       - 17173:31337
 
     ulimits: 
+      nofile:
+        soft: 8192
+        hard: 8192
+
+  shop:
+    build: hard1/service
+    restart: on-failure
+    stop_grace_period: 3s
+    privileged: true
+
+    cpus: 0.1
+    mem_limit: 128M
+    memswap_limit: 128M
+    pids_limit: 512
+
+    ports:
+      - 33063:31337
+
+    ulimits:
       nofile:
         soft: 8192
         hard: 8192
