@@ -73,8 +73,8 @@
 
 \newexperiment{easy1}{<Название>}
 \newexperiment{easy2}{Just log in}
-\newexperiment{medium1}{<Название>}
-\newexperiment{medium2}{<Название>}
+\newexperiment{medium1}{Find file}
+\newexperiment{medium2}{Do you hear it?}
 \newexperiment{hard}{<Название>}
 \newexperiment{reallife}{<Название>}
 
@@ -143,6 +143,17 @@
 
 Нам дается запароленная виртуалка с Windows 7. Хакер, который ее использовал был явно не самым аккуратным человеком, это видно, стоит только зайти. Ну кто будет хранить флаги на рабчоем столе? По сути, вся задача сводится к гуглингу "как сбросить пароль на Windows 7" или, более умный путь решения, знания из которого пригодятся в последней задачи ветки - вытащить из данного дампа памяти с помощью Volatility и плагина mimikatz.
 
+\begin{verbatim}
+$ volatility --plugins=%plugin_folder% -f dump.vmem --profile=Win7SP1x64 mimikatz
+
+Volatility Foundation Volatility Framework 2.6.1
+Module   User             Domain           Password
+-------- ---------------- ---------------- ----------------------------------------
+wdigest  Kirino           OreImo           KirinoAyaseBestLove
+\end{verbatim}
+
+Подробнее про Volatility можно почитать \href{https://habr.com/ru/post/433248/}{вот здесь}.
+
 Флаг: \verb|oren_ctf_Shellshock!|
 
 %----------------------------------------------------------------------------------------
@@ -151,21 +162,60 @@
 
 \experiment{medium1}
 
-\textbf{Теги:} \vspace{\baselineskip}
+\textbf{Теги:} FAT32, циклическая система, дамп\vspace{\baselineskip}
 
 \begin{tcolorbox}
 <условие задачи>
 \end{tcolorbox}
+
+Нам дан FAT32 дамп какого-то диска. Если немного побродить по папкам становится понятно, что система закольцована. Но должно же быть решение! Если проанализировать дамп \verb|fatcat|'ом (или чем-то похожим), то можно увидеть, что количество ссылок на \verb|O| немного отличается. Стоп, но и флаги наичнаются с \verb|O|. Провалившись вниз еще на несколько уровней становится понятно, что это флаг, зашитый в закольцованный дамп. Дальше можно или ручками пройти весь путь или написать простенький баш-скрипт, который найдет нужный путь:
+\begin{lstlisting}[language=Bash]
+#!/bin/sh
+
+for i in {1..660}
+do
+    fatcat dump -L $i 2>/dev/null | grep '^f' >> files
+done
+\end{lstlisting}
+
+Содержимое файлика весьма лаконично:
+\begin{lstlisting}
+f 1/1/1980 00:00:00  MATCH                          c=74 s=0 (0B)
+f 1/1/1980 00:00:00  MATCH                          c=74 s=0 (0B)
+f 1/1/1980 00:00:00  MATCH                          c=74 s=0 (0B)
+f 1/1/1980 00:00:00  MATCH                          c=74 s=0 (0B)
+\end{lstlisting}
+
+Воспользуемся прямым путем до флага: \verb|fatcat -k 74 dump| и получим \newline \verb|/SPACE/O/R/E/N/_/C/T/F/_/V/E/N/O/M/!/MATCH|. Немного побрутив регистр одного слова (все остальные фиксированы) получем наш флаг: \verb|oren_ctf_VENOM!|.
+\newpage
 
 %-----------------------------------------
 
 \experiment{medium2}
 
-\textbf{Теги:} \vspace{\baselineskip}
+\textbf{Теги:} Фазовое кодирование, стеганография\vspace{\baselineskip}
 
 \begin{tcolorbox}
 <условие задачи>
 \end{tcolorbox}
+
+В аудиозаписи автоматический голос сообщает: "где-то в этом сообщении спрятан флаг". Никакой другой полезной информации голос не сообщает.
+
+Слушаем файл и слышим характерные "потрескивания" на фоне голоса. Эти же потрескивания видны и в спектрограмме (вертикальные линии):
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=1.0\linewidth]{files/spectrogram}
+\end{center}
+\label{fig:spectrogram}
+\end{figure}
+
+Для тех, кто знаком со звуковой стеганографией, эти потрескивания сразу же напомнят фазовое кодирование — один из самых простых и эффективных методов скрытия информации. Этот метод довольно популярен, и его часто описывают в исследованиях.
+
+Чтобы решить таск, нужно написать (или найти в интернете) код, который умеет разворачивать фазовое кодирование, и перебрать длину сегмента. По простому запросу \href{https://github.com/Galarius/py-stego-phase}{такой} код на Python находится на 4 строке выдачи. Кстати, как раз с помощью этого репозитория и был спрятан флаг!
+
+Если взять тот код, его придётся немного подправить для конкретного WAV файла — он умеет работать только со звуком определённого формата.
+
+Прогоняем обратно, получаем флаг: \verb|oren_ctf_Heartbleed!|
 
 %----------------------------------------------------------------------------------------
 
@@ -173,11 +223,56 @@
 
 \experiment{hard}
 
-\textbf{Теги:} \vspace{\baselineskip}
+\textbf{Теги:} Break random\vspace{\baselineskip}
 
 \begin{tcolorbox}
 <условие задачи>
 \end{tcolorbox}
+
+Нам дается архив с текстом программы и зашифрованным флагом. Казалось бы, на первый взгляд задача нерешаемая. Но если немного подумать, то становится понятно, что зип-архив дан чтобы восстановить время в которое был проведен xor. Тогда очень просто написать декриптор и получить флаг:
+\begin{lstlisting}[language=C++,
+					directivestyle={\color{black}}
+					emph={int,char,double,float,unsigned},
+					emphstyle={\color{blue}}
+					]
+#include <iostream>
+#include <fstream>
+#include <ctime>
+#include <cstdlib>
+
+int main()
+{
+    std::fstream in("flag.enc", std::fstream::in);
+    std::fstream out("out", std::fstream::out);
+
+ 	std::string flag;
+ 	std::string wtf;
+ 	time_t start_time;
+
+    in >> flag;
+    std::cin >> start_time;
+
+ 	while(start_time > 0)
+ 	{
+  		srand(start_time);
+  		for(int i = 0; i < flag.size(); i++)
+ 	 	{
+            char ch = flag[i] ^ rand() % 255;
+            if (!isprint(ch)) {
+                break;
+            }
+    		
+            wtf.push_back(ch);
+  		} 
+  	
+        wtf.push_back('\n');
+		out << wtf;
+  		start_time -= 1;
+ 	} 
+}	
+\end{lstlisting}
+				   
+Грепаем выходной файлик и получаем флаг \verb|oren_ctf_goto_fail!|
 
 %----------------------------------------------------------------------------------------
 
@@ -185,11 +280,19 @@
 
 \experiment{reallife}
 
-\textbf{Теги:} \vspace{\baselineskip}
+\textbf{Теги:} Анализ памяти\vspace{\baselineskip}
 
 \begin{tcolorbox}
 <условие задачи>
 \end{tcolorbox}
+
+Казалось бы, на виртуалке уже все посмотрено. Но как-то удивляет хром с девственно-чистой историей. Надо бы посмотреть, что там было. Благо, нам дан дамп оперативной памяти. Просто залезаем плагином в историю хрома и, внезапно, получаем ссылку на pastebin.com, где лежит последний флаг серии.
+
+\begin{verbatim}
+volatility --plugins=%plug_folder% -f dump --profile=Win7SP1x64 chromehistory
+\end{verbatim}
+
+Флаг: \verb|oren_ctf_Badlock!|
 
 %----------------------------------------------------------------------------------------
 
