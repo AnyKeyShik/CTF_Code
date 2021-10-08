@@ -1,0 +1,13 @@
+FROM keltecc/nsjail:latest
+
+ADD entrypoint.sh /tmp/
+ADD MAL flag /var/service/
+ADD libs.tar.gz /tmp/libs/
+ADD ld-linux-x86-64.so.2 /tmp/
+
+RUN chmod 555 /tmp/entrypoint.sh
+
+#RUN useradd -M -s /bin/false mal
+#USER mal
+
+ENTRYPOINT /tmp/entrypoint.sh
