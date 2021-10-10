@@ -72,11 +72,11 @@
 %----------------------------------------------------------------------------------------
 
 \newexperiment{easy1}{Are you true admin?}
-\newexperiment{easy2}{<Название>}
-\newexperiment{medium1}{<Название>}
-\newexperiment{medium2}{<Название>}
-\newexperiment{hard}{<Название>}
-\newexperiment{reallife}{<Название>}
+\newexperiment{easy2}{Do you like black terminals with green text?}
+\newexperiment{medium1}{The best ID(A)E}
+\newexperiment{medium2}{Broadcast}
+\newexperiment{hard}{Just ping me}
+\newexperiment{reallife}{Everybody want to be root}
 
 %---------------------------------------------------------------------------------------
 
@@ -137,11 +137,21 @@
 
 \experiment{easy2}
 
-\textbf{Теги:} \vspace{\baselineskip}
+\textbf{Теги:} Web, шифрование, brainfuck\vspace{\baselineskip}
 
 \begin{tcolorbox}
 <условие задачи>
 \end{tcolorbox}
+
+Нам дан сайт, который с первого взгляда абсолютно пуст. Но если посмотреть в develop-консоль, то можно увидеть, что сайт выдает туда некий base64. При расшифровке получаем:  \begin{verbatim}
+Welcome aboard. Your secret phrase is "hyperion". 
+Maybe you will need this: ----[-->+++++<]>.------.++++.--.+++[->+++<]>.[--->+<]>-.
+++[->+++<]>.[--->+<]>--.+[->+++<]>.---------.[--->+<]>++.+++++.---.[------>+<]>.
+[--->++<]>+++++.[->+++++<]>+++.[->+++<]>+.+++++.----.[----->++<]>+.+[----->+<]>.
+++[---->+<]>++.|
+\end{verbatim}
+
+Последнее очень похоже на эзотерический язык программирования brainfuck. И дейсвительно, если выполнить эту программу любым интерпретатором, то можно получить \verb|vptr_tbt_VtyviKzotpaz!|, что оооочень напоминает по формату флаг. Остается вспомнить, какие шифры требуют ключ. Первым, как самым популярным, на ум приходит шифр Виженера. И действительно, если прогнать через любой расшифровщик, то получаем \verb|oren_ctf_ImageTragick!|
 
 %----------------------------------------------------------------------------------------
 
@@ -149,11 +159,37 @@
 
 \experiment{medium1}
 
-\textbf{Теги:} \vspace{\baselineskip}
+\textbf{Теги:} User-agent, SHA1, requests\vspace{\baselineskip}
 
 \begin{tcolorbox}
 <условие задачи>
 \end{tcolorbox}
+
+При переходе по ссылке внезапно оказывается, что сайт не любит гостей. Но если посмотреть на заголовок ответа, то можно увидеть, что нам предлагают перейти по какой-то ссылке. Похоже на какой-то хеш. Если посчитать количество символов, то можно понять, что это SHA1, символов ровно 20 штук. Брут ничего не дает, поэтому можно просто перейти. Опять предложение перейти по ссылке и уже ответ, что мы забанены. Тогда можно написать простой питоновский скрипт, который просто ходит по ссылкам. В конце концов, судя по названия таска, где-то в конце будет флаг
+\begin{lstlisting}[language=Python]
+from urllib.request import urlopen, Request
+import sys
+
+
+def get_next_message(hash_str, const):
+    new_request = Request(
+        url="http://{}/".format(sys.argv[1]) + hash_str,
+        headers={'User-Agent': "snake3.smth + {}".format(const)}
+    )
+    print(hash_str)
+    return urlopen(new_request).msg
+
+
+i = 0
+global_hash_string = get_next_message("", i)
+while "oren_ctf" not in global_hash_string:
+    i += 1
+    print(i, global_hash_string)
+    global_hash_string = get_next_message(global_hash_string.split()[-1], i)
+print(global_hash_string)
+\end{lstlisting}
+
+И действительно, в конце концов получаем флаг \verb|oren_ctf_DUHK!|
 
 %-----------------------------------------
 
@@ -171,11 +207,13 @@
 
 \experiment{hard}
 
-\textbf{Теги:} \vspace{\baselineskip}
+\textbf{Теги:} ICMP, Network analysis\vspace{\baselineskip}
 
 \begin{tcolorbox}
 <условие задачи>
 \end{tcolorbox}
+
+Дан единственный ICMP-запрос на хост. Но он выглядит не как стандартный ICMP - в секции данных что-то еще спрятано. Первое желение - послать такой же запрос на хост. И дейсвительно, в ответ прилетает флаг \verb|oren_ctf_Rowhammer!|
 
 %----------------------------------------------------------------------------------------
 
