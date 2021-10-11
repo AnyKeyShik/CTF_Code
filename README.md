@@ -22,7 +22,7 @@ AnyKeyShik Rarity [@AnyKeyShik](https://t.me/AnyKeyShik)
 
 #### Forensics:
 
-####### For this category easy2-reallife in one virtual machine
+For this category easy2-reallife in one virtual machine
 
 [Writeup](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/forensics.pdf)
 
