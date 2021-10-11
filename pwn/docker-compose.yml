@@ -12,7 +12,7 @@ services:
     pids_limit: 512
 
     ports:
-        - 41892:7777
+        - 31892:7777
 
     ulimits:
       nofile:
@@ -30,7 +30,7 @@ services:
     pids_limit: 512
 
     ports:
-        - 41488:7777
+        - 31488:7777
 
     ulimits:
       nofile:
@@ -48,7 +48,7 @@ services:
     pids_limit: 512
 
     ports:
-        - 26784:7777
+        - 36784:7777
 
     ulimits:
       nofile:
@@ -68,7 +68,7 @@ services:
     pids_limit: 512
 
     ports:
-      - 17173:31337
+      - 37173:31337
 
     ulimits: 
       nofile:

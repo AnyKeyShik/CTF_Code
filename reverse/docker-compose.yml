@@ -1,8 +1,8 @@
 version: '2.2'
 
 services:
-  shamir:
-    build: medium2/service
+  wallet:
+    build: medium/service
     restart: on-failure
     stop_grace_period: 3s
 
@@ -12,15 +12,15 @@ services:
     pids_limit: 20
 
     ports:
-      - 2386:7777
+      - 4386:7777
 
     ulimits:
       nofile:
         soft: 12000
         hard: 12000
 
-  elgamal:
-    build: hard1/service
+  webapp:
+    build: reallife/service
     restart: on-failure
     stop_grace_period: 3s
 
@@ -30,7 +30,7 @@ services:
     pids_limit: 20
 
     ports:
-      - 2263:7777
+      - 4263:7777
 
     ulimits:
       nofile:

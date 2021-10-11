@@ -12,7 +12,7 @@ services:
     pids_limit: 20
 
     ports:
-      - 1928:80
+      - 1267:80
 
     ulimits:
       nofile:
@@ -27,9 +27,9 @@ services:
     environment:
       - DB_PATH=/db/user_agents.db
     ports:
-      - "127.0.0.1:8003:80"
+      - 1294:80
     volumes:
-      - medium1/service/deep_db:/db
+      - ./deep_db:/db
 
   pingme:
     build: hard/service
