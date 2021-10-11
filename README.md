@@ -70,9 +70,7 @@ Task | Writeup
 [Easy 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/easy1)
 [Easy 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/easy2)
 [Medium 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/medium1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/medium1)
-[Medium 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/medium2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/medium2)
 [Hard](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/hard) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/hard)
-[Real life](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/reallife) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/reallife)
 
 #### Crypto:
 
