@@ -295,3 +295,4 @@ TSWLatexianTemp*
 build/
 .idea/
 .gradle/
+.gdb_history
