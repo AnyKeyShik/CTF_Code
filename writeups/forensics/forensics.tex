@@ -71,12 +71,12 @@
 %	DEFINITION OF EXPERIMENTS
 %----------------------------------------------------------------------------------------
 
-\newexperiment{easy1}{<Название>}
+\newexperiment{easy1}{Baby keyboard}
 \newexperiment{easy2}{Just log in}
 \newexperiment{medium1}{Find file}
 \newexperiment{medium2}{Do you hear it?}
-\newexperiment{hard}{<Название>}
-\newexperiment{reallife}{<Название>}
+\newexperiment{hard}{Random xor}
+\newexperiment{reallife}{How about history?}
 
 %---------------------------------------------------------------------------------------
 
@@ -125,11 +125,92 @@
 
 \experiment{easy1}
 
-\textbf{Теги:} \vspace{\baselineskip}
+\textbf{Теги:} Hardware capture\vspace{\baselineskip}
 
 \begin{tcolorbox}
 <условие задачи>
 \end{tcolorbox}
+
+Открываем дамп и видим, что это просто сниф данных с USB-порта. По условию таска это клавиатура, из чего и будем исходить. Если присмотреться можно увидеть, что все пакеты по 8 байт. Значит это точно клавиатура, либо что-то похожее и передающее данные на маленькой скорости (подробнее про это можно прочитать вот \href{https://www.beyondlogic.org/usbnutshell/usb4.shtml}{здесь}). Теперь остается только достать полезную нагрузку и добавить ее как столбец:
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=1.0\linewidth]{files/keyboard-payload}
+\end{center}
+\label{fig:keyboard-payload}
+\end{figure}
+
+Экспортируем данные в CSV и убираем заусенцы:
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=1.0\linewidth]{files/keyboard-csv}
+\end{center}
+\label{fig:keyboard-csv}
+\end{figure}
+
+После чего не составляет проблемы написать простенький питоновский скрипт для парса этой штуки и получения флага:
+\begin{lstlisting}[language=Python]
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+keyboardMap = {
+    2: "PostFail",
+    4: "a",
+    5: "b",
+    6: "c",
+    7: "d",
+    8: "e",
+    9: "f",
+    10: "g",
+    11: "h",
+    12: "i",
+    13: "j",
+    14: "k",
+    15: "l",
+    16: "m",
+    17: "n",
+    18: "o",
+    19: "p",
+    20: "q",
+    21: "r",
+    22: "s",
+    23: "t",
+    24: "u",
+    25: "v",
+    26: "w",
+    27: "x",
+    28: "y",
+    29: "z",
+    30: "1",
+    31: "2",
+    32: "3",
+    33: "4",
+    34: "5",
+    35: "6",
+    36: "7",
+    37: "8",
+    38: "9",
+    39: "0",
+    40: "Enter",
+    44: "Space",
+    45: "-",
+    47: "[",
+    48: "]",
+    57: "CapsLock"
+}
+
+with open('hexoutput', 'r') as keys:
+    for line in keys:
+        bytesArray = bytearray.fromhex(line.strip())
+
+        for byte in bytesArray:
+            if byte != 0:
+                value = int(byte)
+
+                if value in keyboardMap:
+                    print(keyboardMap[value])
+                else:
+                    print("Unknown key {:d}!".format(value))
+\end{lstlisting}
 
 %-----------------------------------------
 
