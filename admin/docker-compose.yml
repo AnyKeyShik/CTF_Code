@@ -20,7 +20,7 @@ services:
         hard: 12000
 
   deep:
-    build: medium1/service
+    build: medium/service
     restart: always
     stop_grace_period: 3s
 
