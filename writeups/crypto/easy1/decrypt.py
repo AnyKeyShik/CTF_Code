@@ -18,7 +18,7 @@ def main():
     with open("flag.enc", 'r') as flag_file:
         flag = flag_file.read()
 
-    print(flag)
+    print(decode(flag))
 
 
 if __name__ == '__main__':
