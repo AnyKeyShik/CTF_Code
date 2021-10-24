@@ -20,31 +20,37 @@ services:
         hard: 12000
 
   deep:
-    build: medium/service
+    build: medium1/service
     restart: always
     stop_grace_period: 3s
 
     environment:
       - DB_PATH=/db/user_agents.db
     ports:
-      - 1294:80
+      - 1299:80
     volumes:
       - ./deep_db:/db
 
-  pingme:
+  bash_escape:
+    build: medium2/service
+    restart: on-failure
+    stop_grace_period: 3s
+
+    ports:
+      - 1893:9999
+
+  too_many_files:
     build: hard/service
     restart: on-failure
     stop_grace_period: 3s
 
-    cpus: 0.1
-    mem_limit: 128M
-    memswap_limit: 128M
-    pids_limit: 20
+    ports:
+      - 1653:22
+
+  just_read_me:
+    build: reallife/service
+    restart: on-failure
+    stop_grace_period: 3s
 
     ports:
-      - 1234:1234
-
-    ulimits:
-      nofile:
-        soft: 12000
-        hard: 12000
+      - 1934:9999
