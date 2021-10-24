@@ -28,12 +28,12 @@ For this category easy2-reallife in one virtual machine
 
 Task | Writeup
 --- | ---
-[Easy 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/easy1)
-[Easy 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/easy2)
-[Medium 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/medium1)
-[Medium 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/medium2)
-[Hard](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/hard)
-[Real life](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/reallife)
+[Baby keyboard](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/easy1)
+[Just log in](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/easy2)
+[Find file](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/medium1)
+[Do you hear it?](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/medium2)
+[Random xor](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/hard)
+[How about history?](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/reallife)
 
 #### Reverse:
 
@@ -41,11 +41,11 @@ Task | Writeup
 
 Task | Writeup
 --- | ---
-[Easy 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/easy1)
-[Easy 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/easy2)
-[Medium](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/medium) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/medium)
-[Hard](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/hard) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/hard)
-[Real life](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/reallife) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/reallife)
+[Check the license](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/easy1)
+[Guess the password](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/easy2)
+[Cryptowallet](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/medium) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/medium)
+[Friendly VM](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/hard) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/hard)
+[Let's GO for cookies](https://github.com/AnyKeyShik/CTF_Code/blob/master/reverse/reallife) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/reverse/reallife)
 
 
 #### Binary analysis:
@@ -54,12 +54,12 @@ Task | Writeup
 
 Task | Writeup
 --- | ---
-[Easy 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/easy1)
-[Easy 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/easy2)
-[Medium 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/medium1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/medium1)
-[Medium 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/medium2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/medium2)
-[Hard](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/hard) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/hard)
-[Real life](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/reallife) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/reallife)
+[Crash me](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/easy1)
+[System health check](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/easy2)
+[You're a Wizard, Harry](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/medium1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/medium1)
+[My anime list](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/medium2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/medium2)
+[Arbalest shop](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/hard) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/hard)
+[Squirrel as a service](https://github.com/AnyKeyShik/CTF_Code/blob/master/pwn/reallife) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/pwn/reallife)
 
 #### Admin:
 
@@ -67,10 +67,12 @@ Task | Writeup
 
 Task | Writeup
 --- | ---
-[Easy 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/easy1)
-[Easy 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/easy2)
-[Medium 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/medium1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/medium1)
-[Hard](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/hard) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/hard)
+[Are you true admin?](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/easy1)
+[Do you like black terminals with green text?](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/easy2)
+[Use your head](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/medium1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/medium1)
+[Bash escape](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/medium2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/medium2)
+[Too many files](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/hard) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/hard)
+[Just read the flag](https://github.com/AnyKeyShik/CTF_Code/blob/master/admin/reallife) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/admin/reallife)
 
 #### Crypto:
 
@@ -78,9 +80,9 @@ Task | Writeup
 
 Task | Writeup
 --- | ---
-[Easy 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/easy1)
-[Easy 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/easy2)
-[Medium 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/medium1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/medium1)
-[Medium 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/medium2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/medium2)
-[Hard 1](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/hard1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/hard1)
-[Hard 2](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/hard2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/hard2)
+[Based task](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/easy1)
+[Hashes among us](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/easy2)
+[Please be careful with ASR](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/medium1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/medium1)
+[Please don't share](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/medium2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/medium2)
+[Do you want to play some gamel?](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/hard1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/hard1)
+[Curve task](https://github.com/AnyKeyShik/CTF_Code/blob/master/crypto/hard2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/crypto/hard2)
