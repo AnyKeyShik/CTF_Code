@@ -12,7 +12,7 @@ INT_MIN = 0x80000000
 
 def exploit():
     if REMOTE:
-        r = remote('127.0.0.1', 41892)
+        r = remote('ctf-edu-t.orb.ru', 31892)
     else:
         r = process(BINARY)
 

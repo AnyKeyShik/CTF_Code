@@ -11,7 +11,7 @@ REMOTE = True
 
 def exploit():
     if REMOTE:
-        r = remote('127.0.0.1', 41488)
+        r = remote('ctf-edu-t.orb.ru', 31488)
     else:
         r = process(BINARY)
 

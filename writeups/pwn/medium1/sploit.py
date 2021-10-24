@@ -29,7 +29,7 @@ def leak_win_address(remote):
 
 def exploit():
     if REMOTE:
-        r = remote('127.0.0.1', 26784)
+        r = remote('ctf-edu-t.orb.ru', 36784)
     else:
         r = process(BINARY)
 

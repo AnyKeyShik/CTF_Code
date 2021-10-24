@@ -13,7 +13,7 @@ one_shots = [0xe6b93, 0xe6b96, 0xe6b99, 0x10af39]
 
 libc = ELF(LIBC)
 if REMOTE:
-    r = remote('127.0.0.1', 17173)
+    r = remote('ctf-edu-t.orb.ru', 37173)
 else:
     r = process(BINARY)
 
