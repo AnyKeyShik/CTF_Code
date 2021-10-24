@@ -6,18 +6,8 @@ services:
     restart: on-failure
     stop_grace_period: 3s
 
-    cpus: 0.1
-    mem_limit: 128M
-    memswap_limit: 128M
-    pids_limit: 20
-
     ports:
       - 2386:7777
-
-    ulimits:
-      nofile:
-        soft: 12000
-        hard: 12000
 
   elgamal:
     build: hard1/service
