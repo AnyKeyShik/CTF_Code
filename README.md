@@ -30,10 +30,10 @@ Task | Writeup
 --- | ---
 [Baby keyboard](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/easy1)
 [Just log in](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/easy2)
-[Find file](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/medium1)
-[Do you hear it?](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/medium2)
-[Random xor](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/hard)
-[How about history?](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/easy2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/reallife)
+[Find file](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/medium1) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/medium1)
+[Do you hear it?](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/medium2) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/medium2)
+[Random xor](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/hard) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/hard)
+[How about history?](https://github.com/AnyKeyShik/CTF_Code/blob/master/forensics/reallife) | [Solve files](https://github.com/AnyKeyShik/CTF_Code/blob/master/writeups/forensics/reallife)
 
 #### Reverse:
 
